@@ -21,7 +21,6 @@ Public Class Window
     Private Const HT_CAPTION As Integer = &H2
     Private Const VK_LBUTTON As Integer = &H1
 
-    ' Variablen
     Private WithEvents _targetPanel As Control
     Private _parentForm As Form
     Public _isMaxed As Boolean = False
@@ -36,9 +35,7 @@ Public Class Window
         _DefaultHeight = parentForm.Height
     End Sub
 
-    ' --- Die neue Methode zum Hinzufügen von Controls ---
     Public Sub AddControl(ctrl As Control)
-        ' Wir binden die Events an das übergebene Control
         AddHandler ctrl.MouseDown, AddressOf OnMouseDown
         AddHandler ctrl.DoubleClick, AddressOf OnDoubleClick
     End Sub
@@ -50,16 +47,12 @@ Public Class Window
     Private Sub OnMouseDown(sender As Object, e As MouseEventArgs)
         If e.Button = MouseButtons.Left Then
             If _isMaxed Then
-                _isMaxed = False ' Status sofort ändern
-
-                ' Größe SOFORT setzen (KEINE Animation hier!)
+                _isMaxed = False
                 _parentForm.Size = New Size(DefaultWidth, DefaultHeight)
 
-                ' Position unter die Maus setzen
                 Dim mPos = Cursor.Position
                 _parentForm.Location = New Point(mPos.X - (DefaultWidth \ 2), mPos.Y - 15)
 
-                ' UI-Update erzwingen
                 Application.DoEvents()
             End If
 
